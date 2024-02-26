@@ -1,0 +1,28 @@
+version: "3"
+networks:
+  dem:
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: test_db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+    ports:
+      - "5432:5432"
+    networks:
+      - dem
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root 
+    ports: 
+      - "5000:80"
+    depends_on:
+      - postgres
+    networks:
+      - dem
