@@ -2,8 +2,14 @@ from sqlalchemy import create_engine
 
 # Substitua o IP abaixo pelo IP correto do seu Docker host
 # Substitua a senha e outros detalhes conforme necessário
-db_url = 'postgresql://root:12345@127.0.0.1:5432/test_db?client_encoding=latin-1'
 
+db_name = 'test_db'
+db_user = 'root'
+db_pass = '12345'
+db_host = 'db'
+db_port = '5432'
+db_url = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
+print(db_url)
 # Imprimir a string de conexão em hexadecimais
 print("String de Conexão (Hex):", db_url.encode('utf-8').hex())
 

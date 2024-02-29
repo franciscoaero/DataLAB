@@ -2,9 +2,11 @@ version: "3"
 networks:
   dem:
 services:
-  postgres:
+  db:
     image: postgres:latest
     restart: always
+    volumes:
+      - .devops/data/db:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: test_db
       POSTGRES_USER: root
@@ -23,6 +25,17 @@ services:
     ports: 
       - "5000:80"
     depends_on:
-      - postgres
+      - db
+    networks:
+      - dem
+  backend:
+    build: .
+    command: ["sleep", "3600000"]
+    volumes:
+      - .:/application
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
     networks:
       - dem
